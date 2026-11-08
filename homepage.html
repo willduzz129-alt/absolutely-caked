@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Absolutely Caked — Homepage</title>
+<style>
+  @font-face {
+    font-family: "Newsreader";
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url("assets/fonts/newsreader.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Newsreader";
+    font-style: italic;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url("assets/fonts/newsreader-italic.woff2") format("woff2");
+  }
+  :root {
+    --ink: #141414;
+    --paper: #F3EEE6;
+    --ivory: #F7F4EE;
+    --purple: #330072;
+    --mute: #6E6860;
+    --line: #D9D1C4;
+    --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 450;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+
+  .util {
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 40px;
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  .util b { font-weight: 560; font-style: italic; color: #E6D7FF; }
+
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 14px 40px;
+    background: rgba(243,238,230,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .mark {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: none;
+    background: #fff;
+  }
+  .mark img { width: 100%; height: 100%; object-fit: cover; }
+  nav.links { display: flex; justify-content: center; gap: 28px; font-size: 17px; }
+  nav.links a { border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  nav.links a:hover { border-bottom-color: var(--purple); }
+  .actions { display: flex; gap: 10px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 8px 18px;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1;
+  }
+  .btn.fill { background: var(--purple); border-color: var(--purple); color: var(--paper); }
+  .btn.light { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+  .btn.ghost { border-color: var(--paper); color: var(--paper); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    min-height: calc(100vh - 118px);
+    background: var(--paper);
+  }
+  .hero-copy {
+    padding: 56px 48px 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 36px;
+  }
+  .eyebrow {
+    font-size: 15px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  h1 {
+    margin: 18px 0 0;
+    font-weight: 560;
+    font-style: italic;
+    font-size: clamp(64px, 6.4vw, 108px);
+    line-height: .86;
+    letter-spacing: -.03em;
+  }
+  h1 .hard {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 0 12px 6px;
+    background: var(--purple);
+    color: var(--paper);
+    font-style: normal;
+    font-weight: 750;
+    letter-spacing: -.045em;
+    line-height: .92;
+  }
+  .hero-copy p { max-width: 34rem; margin: 0; font-size: 20px; }
+  .hero-copy .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .hero-photo { position: relative; min-height: 560px; background: #111; }
+  .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+  .hero-photo span {
+    position: absolute; left: 20px; bottom: 18px; color: #fff;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  }
+
+  .marq {
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    padding: 16px 0;
+  }
+  .marq-track {
+    display: flex;
+    gap: 28px;
+    width: max-content;
+    animation: slide 28s linear infinite;
+    font-weight: 650;
+    font-size: 28px;
+    letter-spacing: -.02em;
+  }
+  .marq i { font-style: italic; color: #CDB4FF; font-weight: 560; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  section { padding: 88px 40px; }
+  .sh {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  h2 {
+    margin: 0;
+    font-size: clamp(48px, 5vw, 76px);
+    font-weight: 680;
+    line-height: .9;
+    letter-spacing: -.035em;
+  }
+  .more {
+    font-style: italic;
+    border-bottom: 1px solid var(--purple);
+    padding-bottom: 2px;
+    white-space: nowrap;
+  }
+
+  .made .g { display: grid; grid-template-columns: 1.35fr 1fr 1fr 1fr; gap: 14px; }
+  figure { margin: 0; }
+  .ph { position: relative; overflow: hidden; background: #111; }
+  .made .ph { height: 460px; }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  figcaption {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding-top: 10px; font-size: 16px;
+  }
+  figcaption span { color: var(--mute); font-style: italic; }
+
+  .how { background: var(--ink); color: var(--paper); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #3a3733; }
+  .steps article { padding: 28px 28px 0 0; }
+  .steps b { color: #CDB4FF; font-weight: 560; font-style: italic; font-size: 18px; }
+  .steps h3 { margin: 8px 0 10px; font-size: 32px; font-weight: 650; letter-spacing: -.03em; line-height: .95; }
+  .steps p { margin: 0; color: #c9c2b4; font-size: 17px; max-width: 16rem; }
+  .how .btn { margin-top: 40px; }
+
+  .tins .g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tins article { background: var(--ivory); }
+  .tins .ph { height: 380px; }
+  .flag {
+    position: absolute; left: 14px; top: 14px;
+    background: var(--paper); font-style: italic; font-size: 14px;
+    padding: 6px 10px;
+  }
+  .mt { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 18px 20px; }
+  .mt b { display: block; font-size: 32px; font-weight: 680; letter-spacing: -.03em; line-height: .95; }
+  .mt span { color: var(--mute); font-style: italic; font-size: 16px; }
+
+  .drop { display: grid; grid-template-columns: 1.15fr .85fr; padding: 0; }
+  .drop .a {
+    background: var(--purple);
+    color: var(--paper);
+    padding: 72px 48px;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .drop .k { font-style: italic; font-size: 18px; }
+  .drop h2 { font-size: clamp(64px, 7vw, 104px); max-width: 8ch; }
+  .inp {
+    display: flex; justify-content: space-between; align-items: baseline;
+    max-width: 460px; border-bottom: 1.5px solid var(--paper);
+    padding: 12px 0; font-size: 18px; font-style: italic;
+  }
+  .inp b { font-style: normal; font-weight: 650; }
+  .drop .b {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .drop ul { list-style: none; margin: 0; padding: 0; }
+  .drop li {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid #3a3733;
+    padding: 18px 0;
+    font-size: 36px;
+    font-weight: 650;
+    letter-spacing: -.03em;
+  }
+  .drop li span { font-style: italic; font-weight: 450; font-size: 16px; color: #b9b1a4; }
+
+  .enq { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; align-items: start; }
+  .enq h2 { margin-bottom: 18px; }
+  .enq .lead { margin: 0 0 8px; max-width: 28rem; }
+  .honest {
+    margin-top: 28px;
+    border-left: 5px solid var(--purple);
+    padding: 2px 0 2px 16px;
+    max-width: 28rem;
+  }
+  .honest b { font-weight: 650; }
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  label {
+    display: flex; flex-direction: column; gap: 8px;
+    border: 1.5px solid var(--ink);
+    background: var(--ivory);
+    padding: 12px 14px 14px;
+    min-height: 78px;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  label.wide { grid-column: 1 / -1; }
+  label.dropzone { border-style: dashed; min-height: 110px; justify-content: center; text-align: center; }
+  label em { font-style: italic; font-size: 18px; letter-spacing: 0; text-transform: none; color: #8d8478; }
+  .form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; border: 0; background: none; padding: 6px 0 0; min-height: 0; }
+
+  .ig { padding-top: 0; }
+  .ig .g { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .ig .g div { aspect-ratio: 1; position: relative; overflow: hidden; background: var(--ink); }
+  .ig .g img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 40px 28px;
+    overflow: hidden;
+  }
+  .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; padding-bottom: 36px; border-bottom: 1px solid #3a3733; }
+  .cols b { display: block; font-weight: 560; font-style: italic; color: #CDB4FF; margin-bottom: 8px; }
+  .cols p, .cols div { margin: 0; color: #d7d0c4; line-height: 1.7; }
+  .footmark { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-top: 28px; }
+  .huge {
+    margin: 0;
+    font-weight: 780;
+    font-size: clamp(96px, 22vw, 340px);
+    line-height: .74;
+    letter-spacing: -.06em;
+  }
+  .footmark .mark { width: 140px; height: 140px; margin-bottom: 12px; }
+  .legal {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin-top: 18px; color: #8f877b; font-style: italic; font-size: 15px;
+  }
+
+  @media (max-width: 980px) {
+    .util { display: none; }
+    header.nav { grid-template-columns: auto auto; padding: 12px 18px; }
+    nav.links { display: none; }
+    .hero, .made .g, .steps, .tins .g, .drop, .enq, .cols { grid-template-columns: 1fr; }
+    .hero-copy, section, footer { padding-left: 18px; padding-right: 18px; }
+    .hero-copy { padding-top: 32px; }
+    .hero-photo { min-height: 420px; }
+    h1 { font-size: 64px; }
+    .made .ph, .tins .ph { height: 280px; }
+    .ig .g { grid-template-columns: repeat(3, 1fr); }
+    .steps article { padding-right: 0; border-top: 1px solid #3a3733; padding-top: 22px; }
+    .steps { border-top: 0; }
+    .footmark { align-items: flex-start; flex-direction: column; }
+    .huge { font-size: 28vw; }
+  }
+</style>
+</head>
+<body>
+  <div class="util">
+    <span>Collection from Dunmow, Essex</span>
+    <span>Local delivery by enquiry</span>
+    <b>Allergens stated honestly</b>
+  </div>
+  <header class="nav">
+    <a class="mark" href="#top" aria-label="Absolutely Caked"><img src="assets/logo-circle.png" alt="Absolutely Caked"></a>
+    <nav class="links">
+      <a href="#cakes">Celebration cakes</a>
+      <a href="#how">How it works</a>
+      <a href="#tins">The tins</a>
+      <a href="#season">Seasonal</a>
+      <a href="#enquire">About</a>
+    </nav>
+    <div class="actions">
+      <a class="btn" href="#enquire">WhatsApp</a>
+      <a class="btn fill" href="#enquire">Enquire</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" style="padding:0">
+      <div class="hero-copy">
+        <div>
+          <div class="eyebrow">Celebration cakes · Dunmow, Essex</div>
+          <h1>Life’s too<br>short for<br><span class="hard">boring cake.</span></h1>
+        </div>
+        <div>
+          <p>Birthdays, weddings, big numbers and the Tuesdays that need it. Bespoke cakes made to order, with brownies, cookies and seasonal drops on the way.</p>
+          <div class="row">
+            <a class="btn fill" href="#enquire">Enquire about a cake</a>
+            <a class="btn" href="#tins">Shop the tins</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/burgundy.jpg" alt="Burgundy celebration cake with a gold Thirty topper">
+        <span>Thirty, in chocolate</span>
+      </div>
+    </section>
+
+    <div class="marq" aria-hidden="true">
+      <div class="marq-track">
+        <span>Birthdays</span><i>/</i><span>Weddings</span><i>/</i><span>Baby showers</span><i>/</i><span>Big numbers</span><i>/</i><span>Anniversaries</span><i>/</i><span>Tuesdays that need it</span><i>/</i>
+        <span>Birthdays</span><i>/</i><span>Weddings</span><i>/</i><span>Baby showers</span><i>/</i><span>Big numbers</span><i>/</i><span>Anniversaries</span><i>/</i><span>Tuesdays that need it</span><i>/</i>
+      </div>
+    </div>
+
+    <section class="made" id="cakes">
+      <div class="sh">
+        <h2>Recently caked.</h2>
+        <a class="more" href="https://www.instagram.com/absolutely_caked_/" target="_blank" rel="noreferrer">More on Instagram</a>
+      </div>
+      <div class="g">
+        <figure><div class="ph"><img src="assets/wedding.jpg" alt="Semi-naked wedding cake"></div><figcaption>Wedding <span>Semi-naked, fresh flowers</span></figcaption></figure>
+        <figure><div class="ph"><img src="assets/pink.jpg" alt="Piped pink and red cake"></div><figcaption>1985 <span>Piped, pink and red</span></figcaption></figure>
+        <figure><div class="ph"><img src="assets/floral.jpg" alt="Floral semi-naked cake"></div><figcaption>Florals <span>Semi-naked</span></figcaption></figure>
+        <figure><div class="ph"><img src="assets/cowboy.jpg" alt="Cowboy baby shower cake"></div><figcaption>Baby shower <span>Cowboy theme</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="sh"><h2>How the big one<br>happens.</h2></div>
+      <div class="steps">
+        <article><b>01</b><h3>Tell us the date.</h3><p>And the occasion. Busy weekends go first, so the earlier the better.</p></article>
+        <article><b>02</b><h3>Numbers and flavour.</h3><p>How many it needs to feed, the flavour, and any ideas. Photos help.</p></article>
+        <article><b>03</b><h3>Your budget, honestly.</h3><p>Say what you want to spend and the design is built around it.</p></article>
+        <article><b>04</b><h3>Collect from Dunmow.</h3><p>Boxed, taped and sealed. Local delivery by arrangement.</p></article>
+      </div>
+      <a class="btn light" href="#enquire">Start an enquiry</a>
+    </section>
+
+    <section class="tins" id="tins">
+      <div class="sh">
+        <h2>The tins.</h2>
+        <a class="more" href="#season">Notify me when the shop opens</a>
+      </div>
+      <div class="g">
+        <article>
+          <div class="ph"><img src="assets/brownie.jpg" alt=""><em class="flag">Photography to commission</em></div>
+          <div class="mt"><div><b>The dark</b><span>Brownies, by the box</span></div><a class="btn" href="#season">Notify me</a></div>
+        </article>
+        <article>
+          <div class="ph"><img src="assets/cookie.jpg" alt=""><em class="flag">Photography to commission</em></div>
+          <div class="mt"><div><b>The thick</b><span>Cookies, by the tin</span></div><a class="btn" href="#season">Notify me</a></div>
+        </article>
+        <article>
+          <div class="ph"><img src="assets/slice.jpg" alt=""><em class="flag">Photography to commission</em></div>
+          <div class="mt"><div><b>The layers</b><span>Signature cake</span></div><a class="btn" href="#season">Notify me</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="drop" id="season">
+      <div class="a">
+        <div>
+          <div class="k">Seasonal drops</div>
+          <h2>Too much. On purpose.</h2>
+        </div>
+        <div class="inp"><span>Your email, for first dibs</span><b>Join</b></div>
+      </div>
+      <div class="b">
+        <ul>
+          <li>Valentine’s <span>Feb</span></li>
+          <li>Easter <span>Spring</span></li>
+          <li>Christmas <span>Dec</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="enq" id="enquire">
+      <div>
+        <h2>Ask for the big one.</h2>
+        <p class="lead">Tell us what it’s for and we’ll come back with a design. Prefer to talk? WhatsApp is fine.</p>
+        <div class="honest"><b>We can’t promise allergen-free.</b> Every cake is made in a kitchen that handles common allergens. Ask before you order and we’ll tell you exactly what’s in yours.</div>
+      </div>
+      <form action="#enquire">
+        <label>Date needed <em>Saturday 14 March</em></label>
+        <label>Occasion <em>Thirtieth birthday</em></label>
+        <label>Portions <em>About 30</em></label>
+        <label>Flavour <em>Chocolate, salted caramel</em></label>
+        <label class="wide">The design <em>Dark, gold topper with her name, nothing pastel</em></label>
+        <label>Budget <em>Roughly what you’d like to spend</em></label>
+        <label>Collection or delivery <em>Collect from Dunmow</em></label>
+        <label class="wide dropzone">Inspiration photos <em>Drop images here</em></label>
+        <div class="form-actions">
+          <button class="btn fill" type="button">Send enquiry</button>
+          <button class="btn" type="button">Or WhatsApp us</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="ig">
+      <div class="sh">
+        <h2>@absolutely_caked_</h2>
+        <a class="more" href="https://www.instagram.com/absolutely_caked_/" target="_blank" rel="noreferrer">Follow</a>
+      </div>
+      <div class="g">
+        <div><img src="assets/burgundy.jpg" alt=""></div>
+        <div><img src="assets/pink.jpg" alt=""></div>
+        <div><img src="assets/wedding.jpg" alt=""></div>
+        <div><img src="assets/floral.jpg" alt=""></div>
+        <div><img src="assets/cowboy.jpg" alt=""></div>
+        <div><img src="assets/burgundy.jpg" alt="" style="transform:scale(2.2);transform-origin:22% 78%"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="cols">
+      <p><b>Absolutely Caked</b>Celebration cakes, made to order.<br>Life’s too short for boring cake.</p>
+      <div><b>Order</b>Enquire<br>WhatsApp<br>The tins</div>
+      <div><b>Visit</b>Collection from Dunmow, Essex<br>Local delivery by enquiry</div>
+      <div><b>Small print</b>Allergens<br>Terms<br>Privacy</div>
+    </div>
+    <div class="footmark">
+      <div class="huge">caked</div>
+      <div class="mark"><img src="assets/logo-circle.png" alt=""></div>
+    </div>
+    <div class="legal"><span>Absolutely Caked · Dunmow</span><span>Instagram</span></div>
+  </footer>
+</body>
+</html>
